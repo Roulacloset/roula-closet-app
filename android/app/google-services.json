@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "729021098311",
+    "project_id": "roula-closet",
+    "storage_bucket": "roula-closet.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729021098311:android:3ed2b882787258f9420462",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIvCyDPTHwuYuRTEqqsVdQtwksP339WKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729021098311:android:e254c8c6346cfa2a420462",
+        "android_client_info": {
+          "package_name": "com.roulacloset.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIvCyDPTHwuYuRTEqqsVdQtwksP339WKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
