@@ -7,6 +7,19 @@ class FullImageScreen extends StatelessWidget {
 
   const FullImageScreen({super.key, required this.imageUrl});
 
+  Future<void> openWhatsApp() async {
+    final Uri url = Uri.parse(
+      "https://wa.me/971566159244?text=Hello, I want this item:",
+    );
+
+    if (await canLaunchUrl(url)) {
+      await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,34 +42,25 @@ class FullImageScreen extends StatelessWidget {
             top: 40,
             left: 20,
             child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
               onPressed: () => Navigator.pop(context),
             ),
           ),
 
-          // زر واتساب رسمي
+          // زر واتساب
           Positioned(
             bottom: 30,
             right: 30,
             child: FloatingActionButton(
-              backgroundColor: const Color(0xFF25D366), // لون واتساب الرسمي
+              backgroundColor: const Color(0xFF25D366),
               child: const FaIcon(
                 FontAwesomeIcons.whatsapp,
                 color: Colors.white,
               ),
-              onPressed: () async {
-
-                final Uri url = Uri.parse(
-                  "https://wa.me/971566159244?text=Hello, I want this item: $imageUrl"
-                );
-
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(
-                    url,
-                    mode: LaunchMode.externalApplication,
-                  );
-                }
-              },
+              onPressed: openWhatsApp,
             ),
           ),
         ],
