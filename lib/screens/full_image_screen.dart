@@ -47,7 +47,7 @@ class FullImageScreen extends StatelessWidget {
               onPressed: () async {
 
                 final Uri url = Uri.parse(
-                  "https://wa.me/971503161359?text=Hello, I want this item: $imageUrl"
+                  "https://wa.me/971566159244?text=Hello, I want this item: $imageUrl"
                 );
 
                 if (await canLaunchUrl(url)) {
