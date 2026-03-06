@@ -13,10 +13,12 @@ workflows:
           flutter clean
           flutter pub get
 
-      - name: Install CocoaPods
+      - name: Fix iOS pods
         script: |
           cd ios
-          pod deintegrate
+          rm -rf Pods
+          rm -rf Podfile.lock
+          pod repo update
           pod install
           cd ..
 
