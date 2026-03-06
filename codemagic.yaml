@@ -6,18 +6,20 @@ workflows:
     environment:
       flutter: stable
       xcode: latest
+      cocoapods: default
 
     scripts:
       - name: Flutter clean
         script: |
           flutter clean
+
+      - name: Get packages
+        script: |
           flutter pub get
 
-      - name: Fix iOS pods
+      - name: Install pods
         script: |
           cd ios
-          rm -rf Pods
-          rm -rf Podfile.lock
           pod repo update
           pod install
           cd ..
