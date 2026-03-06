@@ -30,9 +30,6 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 
-	<key>CFBundleSignature</key>
-	<string>????</string>
-
 	<key>CFBundleVersion</key>
 	<string>1</string>
 
@@ -44,27 +41,20 @@
 		<string>whatsapp</string>
 	</array>
 
-	<key>UIApplicationSceneManifest</key>
-	<dict>
-		<key>UIApplicationSupportsMultipleScenes</key>
-		<false/>
-		<key>UISceneConfigurations</key>
-		<dict>
-			<key>UIWindowSceneSessionRoleApplication</key>
-			<array>
-				<dict>
-					<key>UISceneClassName</key>
-					<string>UIWindowScene</string>
-					<key>UISceneConfigurationName</key>
-					<string>flutter</string>
-					<key>UISceneDelegateClassName</key>
-					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
-					<key>UISceneStoryboardFile</key>
-					<string>Main</string>
-				</dict>
-			</array>
-		</dict>
-	</dict>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<true/>
+
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to photos to upload product images.</string>
+
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to take product photos.</string>
 
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
@@ -87,9 +77,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-
-	<key>UIStatusBarHidden</key>
-	<false/>
 
 </dict>
 </plist>
