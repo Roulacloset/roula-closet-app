@@ -8,8 +8,12 @@ class FullImageScreen extends StatelessWidget {
   const FullImageScreen({super.key, required this.imageUrl});
 
   Future<void> openWhatsApp() async {
+    // قمنا بإضافة رابط الصورة داخل النص لكي يراها صاحب الرقم فوراً
+    final String message = "Hello, I want this item: $imageUrl";
+    final String encodedMessage = Uri.encodeComponent(message);
+    
     final Uri url = Uri.parse(
-      "https://wa.me/971566159244?text=Hello, I want this item:",
+      "https://wa.me/971566159244?text=$encodedMessage",
     );
 
     if (await canLaunchUrl(url)) {
@@ -26,8 +30,6 @@ class FullImageScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-
-          // الصورة
           Center(
             child: Hero(
               tag: imageUrl,
@@ -36,30 +38,20 @@ class FullImageScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          // زر الرجوع
           Positioned(
             top: 40,
             left: 20,
             child: IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () => Navigator.pop(context),
             ),
           ),
-
-          // زر واتساب
           Positioned(
             bottom: 30,
             right: 30,
             child: FloatingActionButton(
               backgroundColor: const Color(0xFF25D366),
-              child: const FaIcon(
-                FontAwesomeIcons.whatsapp,
-                color: Colors.white,
-              ),
+              child: const FaIcon(FontAwesomeIcons.whatsapp, color: Colors.white),
               onPressed: openWhatsApp,
             ),
           ),

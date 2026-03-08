@@ -62,35 +62,40 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> setupFCM() async {
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
+  // طلب إذن كامل يشمل الصوت والتنبيهات
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+    provisional: false,
+  );
 
-    // طلب إذن الإشعارات
-    NotificationSettings settings = await messaging.requestPermission();
+  print("Permission status: ${settings.authorizationStatus}");
 
-    print("Permission status: ${settings.authorizationStatus}");
-
-    // 🔥 طباعة التوكن
-    String? token = await messaging.getToken();
-    print("FCM TOKEN: $token");
-
-    // الاشتراك بالـ topic
-    await messaging.subscribeToTopic("allUsers");
-    print("Subscribed to allUsers");
-
-    // استقبال إشعار والتطبيق مفتوح
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      if (message.notification != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              message.notification!.title ?? "New Notification",
-            ),
-          ),
-        );
-      }
-    });
+  // مهم لـ iOS: الحصول على توكن الـ APNs أولاً
+  if (Theme.of(context).platform == TargetPlatform.iOS) {
+    String? apnsToken = await messaging.getAPNSToken();
+    print("APNs Token: $apnsToken");
   }
+
+  String? token = await messaging.getToken();
+  print("FCM TOKEN: $token");
+
+  await messaging.subscribeToTopic("allUsers");
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    if (message.notification != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message.notification!.title ?? "New Notification"),
+          backgroundColor: Colors.pink, // تمييز الإشعار
+        ),
+      );
+    }
+  });
+}
 
   @override
   Widget build(BuildContext context) {
