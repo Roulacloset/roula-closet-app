@@ -41,7 +41,8 @@ class _ClosetSplashScreenState extends State<ClosetSplashScreen> with SingleTick
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1500));
+    // تم إبطاء الحركة لتكون 2.5 ثانية بدلاً من 1.5 
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 2500));
     _doorAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOutQuart));
 
     Future.delayed(const Duration(seconds: 1), () {
@@ -69,7 +70,6 @@ class _ClosetSplashScreenState extends State<ClosetSplashScreen> with SingleTick
             builder: (context, child) {
               return Stack(
                 children: [
-                  // الدرفة اليسرى
                   Align(
                     alignment: Alignment.centerLeft,
                     child: FractionallySizedBox(
@@ -80,7 +80,6 @@ class _ClosetSplashScreenState extends State<ClosetSplashScreen> with SingleTick
                       ),
                     ),
                   ),
-                  // الدرفة اليمنى
                   Align(
                     alignment: Alignment.centerRight,
                     child: FractionallySizedBox(

@@ -7,14 +7,17 @@ class FullImageScreen extends StatelessWidget {
   final String imageUrl;
   const FullImageScreen({super.key, required this.imageUrl});
 
+  // تفعيل زر المشاركة 
   void shareItem() {
     Share.share("Check out this item from Roula Closet: $imageUrl");
   }
 
   Future<void> openInstagram() async {
-    final Uri url = Uri.parse("https://www.instagram.com/roula_closet/");
+    final Uri url = Uri.parse("instagram://user?username=roula_closet"); // يحاول فتح التطبيق مباشرة
     if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
+      await launchUrl(url);
+    } else {
+      await launchUrl(Uri.parse("https://www.instagram.com/roula_closet/"), mode: LaunchMode.externalApplication);
     }
   }
 
@@ -35,29 +38,36 @@ class FullImageScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
-          IconButton(icon: const Icon(Icons.share), onPressed: shareItem), // ميزة المشاركة لإرضاء أبل
+          // زر المشاركة الأساسي [cite: 390]
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: shareItem,
+          ),
         ],
       ),
       body: Stack(
         children: [
           Center(child: Hero(tag: imageUrl, child: Image.network(imageUrl))),
+          // وضع أزرار التواصل بشكل جانبي وأنيق 
           Positioned(
-            bottom: 30,
-            right: 20,
-            child: Column(
+            bottom: 40,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FloatingActionButton(
-                  heroTag: "ig",
-                  backgroundColor: Colors.purple,
-                  onPressed: openInstagram,
-                  child: const FaIcon(FontAwesomeIcons.instagram, color: Colors.white),
-                ),
-                const SizedBox(height: 15),
-                FloatingActionButton(
-                  heroTag: "wa",
-                  backgroundColor: const Color(0xFF25D366),
+                ElevatedButton.icon(
                   onPressed: openWhatsApp,
-                  child: const FaIcon(FontAwesomeIcons.whatsapp, color: Colors.white),
+                  icon: const FaIcon(FontAwesomeIcons.whatsapp, size: 18),
+                  label: const Text("WhatsApp"),
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF25D366), foregroundColor: Colors.white),
+                ),
+                const SizedBox(width: 15),
+                ElevatedButton.icon(
+                  onPressed: openInstagram,
+                  icon: const FaIcon(FontAwesomeIcons.instagram, size: 18),
+                  label: const Text("Instagram"),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.purple, foregroundColor: Colors.white),
                 ),
               ],
             ),
