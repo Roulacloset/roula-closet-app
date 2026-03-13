@@ -21,11 +21,18 @@
     <key>CFBundleShortVersionString</key>
     <string>1.0.1</string>
     <key>CFBundleVersion</key>
-    <string>30</string> <key>FirebaseAppDelegateProxyEnabled</key>
-    <false/> <key>LSApplicationQueriesSchemes</key>
+    <string>31</string> <key>FirebaseAppDelegateProxyEnabled</key>
+    <false/>
+
+    <key>LSApplicationQueriesSchemes</key>
     <array>
         <string>whatsapp</string>
-    </array>
+        <string>instagram</string>
+        <string>instagram-stories</string>
+        <string>fb</string>
+        <string>facebook-stories</string>
+        <string>tg</string> </array>
+
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSCameraUsageDescription</key>
