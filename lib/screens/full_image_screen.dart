@@ -5,30 +5,37 @@ class FullImageScreen extends StatelessWidget {
   final String imageUrl;
   const FullImageScreen({super.key, required this.imageUrl});
 
-  // الدالة الأساسية للمشاركة - مضمونة العمل بإذن الله
   void _onShare(BuildContext context) async {
+    // هذا السطر يطبع في الـ Console لنتأكد أن الكود وصل لهنا
+    debugPrint("Attempting to share: $imageUrl");
+
     final String text = "Check out this item from Roula Closet: \n$imageUrl";
-    
-    // استخدام Share.share من مكتبة share_plus
-    await Share.share(
-      text,
-      subject: "Roula Closet Item",
-    );
+
+    try {
+      // إجبار النظام على استخدام صندوق المشاركة المخصص لـ iOS و iPad
+      final box = context.findRenderObject() as RenderBox?;
+      
+      await Share.share(
+        text,
+        subject: 'Roula Closet Item',
+        // هذا السطر ضروري جداً لـ iOS لكي يعرف النظام مكان خروج القائمة
+        sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+      );
+    } catch (e) {
+      debugPrint("Share Error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // خلفية سوداء فخمة
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
-        // تم حذف الأزرار من هنا تماماً بناءً على طلبك
-      ),
+      backgroundColor: Colors.black,
+      appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
       body: Stack(
         children: [
-          // عرض الصورة في المنتصف
           Center(
             child: InteractiveViewer(
               child: Hero(
@@ -36,44 +43,23 @@ class FullImageScreen extends StatelessWidget {
                 child: Image.network(
                   imageUrl,
                   fit: BoxFit.contain,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return const Center(
-                      child: CircularProgressIndicator(color: Colors.white),
-                    );
-                  },
+                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.error, color: Colors.white),
                 ),
               ),
             ),
           ),
-          
-          // الزر الوحيد والأساسي في الأسفل
           Positioned(
             bottom: 50,
-            left: 40,
-            right: 40,
+            left: 30,
+            right: 30,
             child: SizedBox(
-              width: double.infinity,
-              height: 55,
+              height: 60,
               child: ElevatedButton.icon(
-                onPressed: () => _onShare(context), // استدعاء الدالة المباشرة
+                // تم ربط الزر بالدالة الجديدة
+                onPressed: () => _onShare(context),
                 icon: const Icon(Icons.share, color: Colors.black),
-                label: const Text(
-                  "SHARE",
-                  style: TextStyle(
-                    fontSize: 18, 
-                    fontWeight: FontWeight.bold, 
-                    color: Colors.black,
-                    letterSpacing: 2,
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  elevation: 5,
-                ),
+                label: const Text("SHARE ITEM", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
               ),
             ),
           ),
